@@ -1,3 +1,9 @@
+# IT DOJO Question Compare Automate Tool
+
+## Abstract
+This tool is useful for team that develops mobile app IT Dojo and much more.
+Script gets question from your data (e.g. txt file) and checking similarity of questions to question that is prompted by user reffering to context. This tool helps avoid checking and adding manually new question to base.
+
 ### Threshold:
 The threshold value represents the similarity threshold below which a user's question will not be considered as a match to any question in the question base. This threshold is used to filter out questions that are not similar enough to the questions in the base. The cosine similarity values will range between -1 and 1, where:
 
