@@ -15,7 +15,6 @@ nltk.download('stopwords')
 nltk.download('wordnet')
 
 # Preprocessing functions
-# Preprocessing functions
 def preprocess_text(text):
     text = re.sub(r'[^\w\s]', '', text)
     tokens = word_tokenize(text)
