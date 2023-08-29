@@ -59,12 +59,10 @@ while True:
         add_to_base = input("Do you want to add this question to the base? (yes/no): ")
         if add_to_base.lower() == 'yes':
             question_base.append(user_question_preprocessed)
-            with open(QUESTION_BASE, 'a') as file:
+            with open(question_base_path , 'a') as file:
                 file.write(user_question + '\n')
             print("Question added to the base.")
 
 print("Exiting the script.")
 
 
-# Okay now add another feature. Instead of adding question candidate by user add function that:
-# - ask user for add path to txt file with list of candidates
