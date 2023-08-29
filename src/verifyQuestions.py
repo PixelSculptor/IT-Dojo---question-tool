@@ -6,9 +6,6 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-
-QUESTION_BASE = './assets/test.txt'
-
 # Load NLTK resources
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -23,8 +20,11 @@ def preprocess_text(text):
     tokens = [lemmatizer.lemmatize(token) for token in tokens]
     return ' '.join(tokens)
 
+# ask user for path:
+question_base_path = input("Please enter the path to the question base text file: ")
+
 # Load and preprocess the question base
-with open(QUESTION_BASE, 'r') as file:
+with open(question_base_path, 'r') as file:
     question_base = file.readlines()
 
 question_base = [preprocess_text(question) for question in question_base]
@@ -64,3 +64,7 @@ while True:
             print("Question added to the base.")
 
 print("Exiting the script.")
+
+
+# Okay now add another feature. Instead of adding question candidate by user add function that:
+# - ask user for add path to txt file with list of candidates
