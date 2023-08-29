@@ -48,7 +48,7 @@ while True:
 
     # Find the most similar question
     most_similar_index = similarities.argmax()
-    threshold = 0.5  # You can adjust this threshold as needed
+    threshold = 0.3  # You can adjust this threshold as needed
 
     if similarities[most_similar_index] > threshold:
         matching_question = question_base[most_similar_index]
