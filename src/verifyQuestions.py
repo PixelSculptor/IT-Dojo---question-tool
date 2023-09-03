@@ -54,6 +54,8 @@ def check_similarity_and_add(candidate_question):
         print(f"Matching question: {matching_question}")
         with open('./assets/errorlog.txt', 'a') as errorlog:
             errorlog.write(candidate_question + '\n')
+        with open('./assets/questions-suspected.txt', 'a') as file:
+            file.write(candidate_question + '\n')
     else:
         print(f"No similar question found in the base for candidate: {candidate_question}")
         add_to_base = input("Do you want to add this question to the base? (yes/no): ")
