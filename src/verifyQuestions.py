@@ -8,6 +8,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from configModel import configModel
 from getAnswer import get_definition
+from translateFlashcards import translateQuestionPack
 
 # Load NLTK resources
 nltk.download('punkt')
@@ -27,6 +28,7 @@ def preprocess_text(text):
 
 # ask user for path:
 question_base_path = input("Please enter the path to the question base text file: ")
+result_path = input("Please choose result path for your files: ")
 
 # Load and preprocess the question base
 with open(question_base_path, 'r') as file:
@@ -55,11 +57,11 @@ def check_similarity_and_add(candidate_question):
         matching_question = question_base[most_similar_index]
         print(f"Similar question found in the base for candidate: {candidate_question}")
         print(f"Matching question: {matching_question}")
-        with open('./assets/errorlog.txt', 'w') as errorlog:
+        with open(result_path + '/errorlog.txt', 'w') as errorlog:
             errorlog.write(candidate_question.strip() + '\n')
-        with open('./assets/questions-suspected.txt', 'a') as file:
+        with open('./assets/questions-suspected.txt', 'w') as file:
             file.write(
-                'Pattern question: ' + matching_question.strip() + '\n' + 'Suspected question' + candidate_question.strip() + '\n')
+                'Pattern question: ' + matching_question.strip() + '\n' + 'Suspected question: ' + candidate_question.strip() + '\n')
     else:
         print(f"No similar question found in the base for candidate: {candidate_question}")
         add_to_base = input("Do you want to add this question to the base? (yes/no): ")
@@ -71,7 +73,7 @@ def check_similarity_and_add(candidate_question):
 
 
 # Read and process candidate questions
-with open('./assets/candidates.txt', 'r') as candidates_file:
+with open(result_path + '/candidates.txt', 'r') as candidates_file:
     candidates = candidates_file.readlines()
 
 for candidate in candidates:
@@ -80,10 +82,10 @@ for candidate in candidates:
 
 userContext = input("Choose a context for LLM model between frontend and QA: ").lower()
 
-
 def writeDefintions(userContextChoice):
     context = configModel(userContextChoice)
     listOfDefinitions = []
+    # request to model
     for question in question_base:
         definition = get_definition(context, question)
         questionPair = {
@@ -93,12 +95,15 @@ def writeDefintions(userContextChoice):
         print("typing answer...")
         listOfDefinitions.append(questionPair)
 
-    with open('./assets/definitions-eng.json', 'a') as definitions:
-        for description in listOfDefinitions:
-            definitions.write(json.dumps(description, indent=4))
+    # write list to json file
+    with open(result_path + '/definitions-eng.json', 'w') as definitions:
+        definitions.write(json.dumps(listOfDefinitions, indent=4))
 
 
+# run function that will generate answers
 writeDefintions(userContext)
 
+# translate into Polish
+translateQuestionPack(result_path)
 
 print("Exiting the script.")

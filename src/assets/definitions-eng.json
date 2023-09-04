@@ -1,0 +1,34 @@
+[
+    {
+        "question": "Who tester software",
+        "answer": "The **tester** is responsible for testing the software. They ensure that the software meets the required standards and specifications by performing various tests and identifying any defects or issues. The tester plays a crucial role in ensuring the quality and reliability of the software before it is released to the users."
+    },
+    {
+        "question": "What test end end e2e",
+        "answer": "**Answer:**\n\nEnd-to-end (E2E) testing is a type of software testing that validates the entire application flow from start to finish, simulating real user scenarios. It ensures that all components of the system work together correctly and helps identify any issues or bugs that may arise during the user's journey."
+    },
+    {
+        "question": "Which element included reporting defect",
+        "answer": "The **element** that is included in reporting a defect is the defect report itself. This report contains information about the defect, such as its description, steps to reproduce, and any supporting evidence. It is an essential part of the QA process to ensure that defects are properly documented and addressed."
+    },
+    {
+        "question": "Which type test difference",
+        "answer": "There are several types of tests in software development, including unit tests, integration tests, and end-to-end tests. \n\n- **Unit tests** focus on testing individual components or functions in isolation to ensure they work correctly.\n- **Integration tests** verify that different components or modules work together as expected.\n- **End-to-end tests** simulate real user scenarios to test the entire application flow.\n\nEach type of test serves a different purpose and helps ensure the quality and functionality of the software."
+    },
+    {
+        "question": "Could Cypress write unit test frontend side",
+        "answer": "No, **Cypress** is primarily used for **end-to-end testing** rather than unit testing. It focuses on simulating user interactions and testing the application as a whole. For unit testing, you can use frameworks like **Jest** or **Mocha** along with tools like **Enzyme** or **React Testing Library**."
+    },
+    {
+        "question": "What happy path",
+        "answer": "The **happy path** refers to the ideal scenario where a user successfully completes a task without encountering any errors or exceptions. It represents the smooth flow of a feature or functionality, ensuring that all steps and interactions work as expected. It is important to test and validate the happy path to ensure a positive user experience."
+    },
+    {
+        "question": "What whitebox test",
+        "answer": "A whitebox test is a type of testing where the internal structure and implementation details of the software are known and used to design test cases. It focuses on testing the logic and functionality of the code. It is also known as clear box testing or structural testing."
+    },
+    {
+        "question": "Where bug reported",
+        "answer": "Bugs are typically reported in a bug tracking system or issue tracking tool. These tools allow users to document and track bugs, assign them to team members, and monitor their progress. Examples of popular bug tracking systems include Jira, Bugzilla, and GitHub Issues."
+    }
+]
