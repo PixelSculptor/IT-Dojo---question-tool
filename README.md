@@ -22,3 +22,15 @@ A threshold of 0.5 could consider more loosely similar matches.
 - add to assets your base of question
 - change value of variable `QUESTION_BASE` to path to your file
 - install proper dependencies (nltk and sklearn) using `pip`: e.g. `pip install nltk`
+- install SDK by OPEN AI
+- generate your key
+- copy to `.env` file (there is a sample file)
+- run program: `python3 verifyQuestion.py`
+- have fun ;)
+
+### Additional info
+If you enojoy my script please add star to this repo ;)
+
+
+### NOTE:
+In the near future, basic docker image will be provided
