@@ -1,3 +1,4 @@
+import json
 import re
 import nltk
 from nltk.tokenize import word_tokenize
@@ -5,6 +6,8 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from configModel import configModel
+from getAnswer import get_definition
 
 # Load NLTK resources
 nltk.download('punkt')
@@ -52,17 +55,18 @@ def check_similarity_and_add(candidate_question):
         matching_question = question_base[most_similar_index]
         print(f"Similar question found in the base for candidate: {candidate_question}")
         print(f"Matching question: {matching_question}")
-        with open('./assets/errorlog.txt', 'a') as errorlog:
-            errorlog.write(candidate_question + '\n')
+        with open('./assets/errorlog.txt', 'w') as errorlog:
+            errorlog.write(candidate_question.strip() + '\n')
         with open('./assets/questions-suspected.txt', 'a') as file:
-            file.write(candidate_question + '\n')
+            file.write(
+                'Pattern question: ' + matching_question.strip() + '\n' + 'Suspected question' + candidate_question.strip() + '\n')
     else:
         print(f"No similar question found in the base for candidate: {candidate_question}")
         add_to_base = input("Do you want to add this question to the base? (yes/no): ")
         if add_to_base.lower() == 'yes':
             question_base.append(candidate_question_preprocessed)
             with open(question_base_path, 'a') as file:
-                file.write(candidate_question + '\n')
+                file.write(candidate_question.strip() + '\n')
             print("Question added to the base.")
 
 
@@ -73,5 +77,28 @@ with open('./assets/candidates.txt', 'r') as candidates_file:
 for candidate in candidates:
     candidate = candidate.strip()
     check_similarity_and_add(candidate)
+
+userContext = input("Choose a context for LLM model between frontend and QA: ").lower()
+
+
+def writeDefintions(userContextChoice):
+    context = configModel(userContextChoice)
+    listOfDefinitions = []
+    for question in question_base:
+        definition = get_definition(context, question)
+        questionPair = {
+            "question": question,
+            "answer": definition
+        }
+        print("typing answer...")
+        listOfDefinitions.append(questionPair)
+
+    with open('./assets/definitions-eng.json', 'a') as definitions:
+        for description in listOfDefinitions:
+            definitions.write(json.dumps(description, indent=4))
+
+
+writeDefintions(userContext)
+
 
 print("Exiting the script.")
