@@ -27,8 +27,11 @@ def preprocess_text(text):
 
 
 # ask user for path:
-question_base_path = './assets/test.txt'
+question_base_path = 'assets/question_base.txt'
 result_path = './assets/'
+
+# list with questions to be answered
+questionsToBeAnswered = []
 
 # Load and preprocess the question base
 with open(question_base_path, 'r') as file:
@@ -65,11 +68,10 @@ def check_similarity_and_add(candidate_question):
     else:
         print(f"No similar question found in the base for candidate: {candidate_question}. Adding...")
         question_base.append(candidate_question_preprocessed)
+        questionsToBeAnswered.append(candidate_question)
         with open(question_base_path, 'a') as file:
             file.write(candidate_question.strip() + '\n')
             print("Question added to the base.")
-        with open('./assets/questionsToGpt.txt', 'w') as questionsToDefinitions:
-            questionsToDefinitions.write(candidate_question.strip() + '\n')
 
 
 # Read and process candidate questions
@@ -86,19 +88,19 @@ userContext = input("Choose a context for LLM model between frontend and QA: ").
 def writeDefintions(userContextChoice):
     context = configModel(userContextChoice)
     listOfDefinitions = []
+    print("Questions to GPT: ", questionsToBeAnswered)
     # request to model
-    with open('./assets/questionsToGpt.txt', 'r') as questionsToDefinitions:
-        for question in questionsToDefinitions:
-            definition = get_definition(context, question)
-            questionPair = {
-                "question": question,
-                "answer": definition
-            }
-            print("typing answer...")
-            listOfDefinitions.append(questionPair)
+    for question in questionsToBeAnswered:
+        definition = get_definition(context, question)
+        questionPair = {
+            "question": question,
+            "answer": definition
+        }
+        print("typing answer...")
+        listOfDefinitions.append(questionPair)
 
         # write list to json file
-        with open(result_path + 'definitions-eng.json', 'w') as definitions:
+        with open(result_path + 'data/definitions-eng.json', 'w') as definitions:
             definitions.write(json.dumps(listOfDefinitions, indent=4))
 
 
