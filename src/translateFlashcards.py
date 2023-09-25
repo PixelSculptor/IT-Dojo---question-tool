@@ -18,8 +18,6 @@ def translateQuestionPack(path='./assets/', targetLang="pl"):
     translatedList = []
     parsedData = parseJsonData('read', path)
     for questionObj in parsedData:
-        # translated_question = translator.translate(questionObj["question"])
-        # translated_answer = translator.translate(questionObj["answer"])
         translated_question = GoogleTranslator(source='auto', target=targetLang).translate(questionObj['question'])
         translated_answer = GoogleTranslator(source='auto', target=targetLang).translate(questionObj['answer'])
         translatedList.append({

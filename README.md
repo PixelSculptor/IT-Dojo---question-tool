@@ -31,6 +31,21 @@ A threshold of 0.5 could consider more loosely similar matches.
 ### Additional info
 If you enojoy my script please add star to this repo ;)
 
+### Performing script
+If you want to provide the best results you need to:
+- in `./assets/candidates.txt` paste your questions that you'd like to add.
+Then script will:
+- compare these questions with questions in base
+- if there is no question similar, then add to base and special list of candidates 
+- if there is similar question
+  - add this question to `./assets/errorlog.txt`
+  - then add this question to `./assets/questions-suspected.txt` - there is comparsion with matching question
+- user is requested to special context for GPT assistant (now QA or Frontend) to provide the best results 
+- script iterates through ready list of question and sending question to GPT LLM model
+- returned answer with question is added to list 
+- whole list is parsed to JSON
+- then JSON with answers in English is translated to Polish language using `deep_translator` library
+- final files are ready in `./assets/data/*` directory
 
 ### NOTE:
 In the near future, basic docker image will be provided
