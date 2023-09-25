@@ -4,14 +4,14 @@ import json
 
 def parseJsonData(mode, path, questionPack=[]):
     if mode == "read":
-        with open(path + '/definitions-eng.json', 'r', encoding="UTF-8") as inputData:
+        with open(path + 'definitions-eng.json', 'r', encoding="UTF-8") as inputData:
             return json.load(inputData)
     else:
-        with open(path + '/definitions-pl.json', 'w', encoding="UTF-8") as outputData:
+        with open(path + 'definitions-pl.json', 'w', encoding="UTF-8") as outputData:
             json.dump(questionPack,outputData, indent=4)
 
 
-def translateQuestionPack(path='./assets', lang="pl=PL"):
+def translateQuestionPack(path='./assets/', lang="pl"):
     translator = Translator(to_lang=lang)
     print("Translating...")
 
