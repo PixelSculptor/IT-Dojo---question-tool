@@ -21,7 +21,7 @@ A threshold of 0.5 could consider more loosely similar matches.
 - fork my repo
 - add to assets your base of question
 - change value of variable `QUESTION_BASE` to path to your file
-- install proper dependencies (nltk and sklearn) using `pip`: e.g. `pip install nltk`
+- install proper dependencies (nltk, sklearn, openAI sdk, dotenv and deep_translator) using `pip`: e.g. `pip install nltk`
 - install SDK by OPEN AI
 - generate your key
 - copy to `.env` file (there is a sample file)

@@ -1,0 +1,8 @@
+Could in Cypress write unit tests for frontend side?
+What is test e2e?
+What is happy path?
+Describe good tester abilities:
+What is white-box test?
+Where bugs should be reported?
+
+// HERE NEW QUESTIONS

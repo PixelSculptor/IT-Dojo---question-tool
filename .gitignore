@@ -186,6 +186,4 @@ fabric.properties
 
 # idea folder, uncomment if you don't need it
 # .idea
-
-# assets files:
-*.txt
+./src/assets/question_base.txt
