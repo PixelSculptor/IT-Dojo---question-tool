@@ -84,7 +84,6 @@ for candidate in candidates:
 
 userContext = input("Choose a context for LLM model between frontend and QA: ").lower()
 
-
 def writeDefintions(userContextChoice):
     context = configModel(userContextChoice)
     listOfDefinitions = []
