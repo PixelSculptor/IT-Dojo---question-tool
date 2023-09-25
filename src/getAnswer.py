@@ -19,7 +19,10 @@ def get_definition(_context, _question):
     prompt = f"""
     Context: ```{_context}```
     Question: ```{_question}```
-    Expected format of answer is Markdown. Emphasise keywords based on ```{_question}``` content.
+    Answer questions based on passed context. Answer limit to 450 characters.
+    Expected format of answer is Markdown notation (lists, bold phrases, enumerating list, new section etc.) - please remember to add new line character after each sentence of answer to provide good Markdown formatting.
+    Emphasise keywords in answer based on ```{_question}``` content.
+    Answer should be in Markdown notation which recognize key words of question and answer. 
 """
     messages = [{"role": "user", "content": prompt}]
     response = openai.ChatCompletion.create(

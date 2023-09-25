@@ -27,8 +27,11 @@ def preprocess_text(text):
 
 
 # ask user for path:
-question_base_path = input("Please enter the path to the question base text file: ")
-result_path = input("Please choose result path for your files: ")
+question_base_path = 'assets/question_base.txt'
+result_path = './assets/'
+
+# list with questions to be answered
+questionsToBeAnswered = []
 
 # Load and preprocess the question base
 with open(question_base_path, 'r') as file:
@@ -57,23 +60,22 @@ def check_similarity_and_add(candidate_question):
         matching_question = question_base[most_similar_index]
         print(f"Similar question found in the base for candidate: {candidate_question}")
         print(f"Matching question: {matching_question}")
-        with open(result_path + '/errorlog.txt', 'w') as errorlog:
+        with open(result_path + 'errorlog.txt', 'w') as errorlog:
             errorlog.write(candidate_question.strip() + '\n')
         with open('./assets/questions-suspected.txt', 'w') as file:
             file.write(
                 'Pattern question: ' + matching_question.strip() + '\n' + 'Suspected question: ' + candidate_question.strip() + '\n')
     else:
-        print(f"No similar question found in the base for candidate: {candidate_question}")
-        add_to_base = input("Do you want to add this question to the base? (yes/no): ")
-        if add_to_base.lower() == 'yes':
-            question_base.append(candidate_question_preprocessed)
-            with open(question_base_path, 'a') as file:
-                file.write(candidate_question.strip() + '\n')
+        print(f"No similar question found in the base for candidate: {candidate_question}. Adding...")
+        question_base.append(candidate_question_preprocessed)
+        questionsToBeAnswered.append(candidate_question)
+        with open(question_base_path, 'a') as file:
+            file.write(candidate_question.strip() + '\n')
             print("Question added to the base.")
 
 
 # Read and process candidate questions
-with open(result_path + '/candidates.txt', 'r') as candidates_file:
+with open('./assets/candidates.txt', 'r') as candidates_file:
     candidates = candidates_file.readlines()
 
 for candidate in candidates:
@@ -82,11 +84,13 @@ for candidate in candidates:
 
 userContext = input("Choose a context for LLM model between frontend and QA: ").lower()
 
+
 def writeDefintions(userContextChoice):
     context = configModel(userContextChoice)
     listOfDefinitions = []
+    print("Questions to GPT: ", questionsToBeAnswered)
     # request to model
-    for question in question_base:
+    for question in questionsToBeAnswered:
         definition = get_definition(context, question)
         questionPair = {
             "question": question,
@@ -95,9 +99,9 @@ def writeDefintions(userContextChoice):
         print("typing answer...")
         listOfDefinitions.append(questionPair)
 
-    # write list to json file
-    with open(result_path + '/definitions-eng.json', 'w') as definitions:
-        definitions.write(json.dumps(listOfDefinitions, indent=4))
+        # write list to json file
+        with open(result_path + 'data/definitions-eng.json', 'w') as definitions:
+            definitions.write(json.dumps(listOfDefinitions, indent=4))
 
 
 # run function that will generate answers
