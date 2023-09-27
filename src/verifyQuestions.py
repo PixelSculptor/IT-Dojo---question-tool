@@ -62,9 +62,13 @@ def check_similarity_and_add(candidate_question):
         print(f"Matching question: {matching_question}")
         with open(result_path + 'errorlog.txt', 'w') as errorlog:
             errorlog.write(candidate_question.strip() + '\n')
-        with open('./assets/questions-suspected.txt', 'w') as file:
-            file.write(
-                'Pattern question: ' + matching_question.strip() + '\n' + 'Suspected question: ' + candidate_question.strip() + '\n')
+        suspectedQuestionDesision = input("Would you like to add this question to base?")
+        if suspectedQuestionDesision == 'yes':
+            questionsToBeAnswered.append(candidate_question)
+        else:
+            with open('./assets/questions-suspected.txt', 'w') as file:
+                file.write(
+                    'Pattern question: ' + matching_question.strip() + '\n' + 'Suspected question: ' + candidate_question.strip() + '\n')
     else:
         print(f"No similar question found in the base for candidate: {candidate_question}. Adding...")
         question_base.append(candidate_question_preprocessed)
