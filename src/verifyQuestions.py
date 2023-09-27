@@ -43,7 +43,10 @@ question_base = [preprocess_text(question) for question in question_base]
 vectorizer = TfidfVectorizer()
 question_base_tfidf = vectorizer.fit_transform(question_base)
 
-
+def writeToBase(question):
+    with open(question_base_path, 'a') as file:
+        file.write(question.strip() + '\n')
+        print("Question added to the base.")
 # Function to check similarity and add to base
 def check_similarity_and_add(candidate_question):
     candidate_question_preprocessed = preprocess_text(candidate_question)
@@ -65,6 +68,7 @@ def check_similarity_and_add(candidate_question):
         suspectedQuestionDesision = input("Would you like to add this question to base?")
         if suspectedQuestionDesision == 'yes':
             questionsToBeAnswered.append(candidate_question)
+            writeToBase(candidate_question)
         else:
             with open('./assets/questions-suspected.txt', 'w') as file:
                 file.write(
@@ -73,10 +77,7 @@ def check_similarity_and_add(candidate_question):
         print(f"No similar question found in the base for candidate: {candidate_question}. Adding...")
         question_base.append(candidate_question_preprocessed)
         questionsToBeAnswered.append(candidate_question)
-        with open(question_base_path, 'a') as file:
-            file.write(candidate_question.strip() + '\n')
-            print("Question added to the base.")
-
+        writeToBase(candidate_question)
 
 # Read and process candidate questions
 with open('./assets/candidates.txt', 'r') as candidates_file:
