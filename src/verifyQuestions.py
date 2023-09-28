@@ -9,6 +9,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from configModel import configModel
 from getAnswer import get_definition
 from translateFlashcards import translateQuestionPack
+from extractAnswers import extractAnswers
 
 # Load NLTK resources
 nltk.download('punkt')
@@ -65,7 +66,7 @@ def check_similarity_and_add(candidate_question):
         print(f"Matching question: {matching_question}")
         with open(result_path + 'errorlog.txt', 'w') as errorlog:
             errorlog.write(candidate_question.strip() + '\n')
-        suspectedQuestionDesision = input("Would you like to add this question to base?")
+        suspectedQuestionDesision = input("Would you like to add this question to base? ")
         if suspectedQuestionDesision == 'yes':
             questionsToBeAnswered.append(candidate_question)
             writeToBase(candidate_question)
@@ -95,13 +96,14 @@ def writeDefintions(userContextChoice):
     print("Questions to GPT: ", questionsToBeAnswered)
     # request to model
     for question in questionsToBeAnswered:
-        definition = get_definition(context, question)
-        questionPair = {
+        answer, shorter_answer = extractAnswers(get_definition(context, question))
+        question_output = {
             "question": question,
-            "answer": definition
+            "answer": answer,
+            "shorterAnswer": shorter_answer
         }
         print("typing answer...")
-        listOfDefinitions.append(questionPair)
+        listOfDefinitions.append(question_output)
 
         # write list to json file
         with open(result_path + 'data/definitions-eng.json', 'w') as definitions:
